@@ -1,0 +1,987 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Aula 2: medidas-sumário &#8212; Ciência de Dados para a Computação</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '02-medidas_sumario';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Aula 01" href="01-introducao.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_insper.png" class="logo__image only-light" alt="Ciência de Dados para a Computação - Home"/>
+    <script>document.write(`<img src="_static/logo_insper.png" class="logo__image only-dark" alt="Ciência de Dados para a Computação - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Ciência de Dados para a Computação
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-python.html">Warm-up</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="01-introducao.html">Aula 01</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Aula 2: medidas-sumário</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F02-medidas_sumario.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/02-medidas_sumario.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Aula 2: medidas-sumário</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Aula 2: medidas-sumário</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#texto-introdutorio">Texto introdutório</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-1">Exercício 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-2">Exercício 2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-3">Exercício 3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-4">Exercício 4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-5">Exercício 5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-6">Exercício 6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-7">Exercício 7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-8">Exercício 8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-9">Exercício 9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-10">Exercício 10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-11">Exercício 11</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="aula-2-medidas-sumario">
+<h1>Aula 2: medidas-sumário<a class="headerlink" href="#aula-2-medidas-sumario" title="Permalink to this heading">#</a></h1>
+<p><strong>Objetivo da aula</strong>: ao fim desta aula, o aluno será capaz de usar medidas-sumário (média, desvio padrão, mediana, percentis) e as figuras correspondentes (histogramas, box plot) para evidenciar características de um conjunto de dados</p>
+<ul class="simple">
+<li><p>Fonte dos dados: <a class="reference external" href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD">https://data.worldbank.org/indicator/NY.GDP.PCAP.CD</a></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="texto-introdutorio">
+<h1>Texto introdutório<a class="headerlink" href="#texto-introdutorio" title="Permalink to this heading">#</a></h1>
+<p>É comum lermos ou ouvirmos comparações como “alguns anos atrás, o mundo era mais tranquilo”, ou “as coisas estão piorando”. Essas impressões são importantes, mas nem sempre correspondem a dados reais. Na verdade, entender o comportamento de fatores sócio-econômicos como o acesso à renda, à educação e à saúde é muito importante para planejamentos nacionais e internacionais relacionados à aplicação e à avaliação de políticas públicas.</p>
+<p>Usando a base de dados do Banco Mundial, temos acesso a vários indicadores sócio-econômicos de todos os países. Como temos acesso aos dados de <em>todos</em> os países possíveis, dizemos que esses dados se referem à <strong>população</strong> de todos os países (importante: não se tratam dos habitantes dos países, mas sim a população de todos os elementos que fazem parte do conjunto “países”). Com esses dados, podemos visualizar e entender melhor como o mundo de hoje se compara com o mundo de anos atrás.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-1">
+<h1>Exercício 1<a class="headerlink" href="#exercicio-1" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: entender dados do Banco Mundial</em></p>
+<p>Abra no Excel o <a class="reference download internal" download="" href="_downloads/9cdb2ea4e3071f56e6d863de8e4999f0/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_3731360.csv"><span class="xref download myst">arquivo csv com dados de PIB per capita por país do Banco Mundial</span></a>.</p>
+<ol class="arabic simple">
+<li><p>Quantas linhas de cabeçalho existem no arquivo?</p></li>
+<li><p>Por que algumas linhas estão incompletas?</p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-2">
+<h1>Exercício 2<a class="headerlink" href="#exercicio-2" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: abrir dados do Banco Mundial em um <code class="docutils literal notranslate"><span class="pre">dataframe</span></code> e isolar as colunas de interesse</em></p>
+<p>O trecho de código abaixo tenta abrir o arquivo com dados do Banco Mundial, mas retorna um erro.</p>
+<ol class="arabic simple">
+<li><p>Que erro é esse e por que ele está acontecendo?</p></li>
+<li><p>Corrija o erro e confirme que os dados foram carregados.</p></li>
+<li><p>Use o método <a class="reference external" href="https://youtu.be/GhvIuGXTd4g">.loc (veja o tutorial em vídeo!)</a> para encontrar o PIB per capita do Brasil em 2010.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;dados/WorldBank/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_3731360.csv&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country Name</th>
+      <th>Country Code</th>
+      <th>Indicator Name</th>
+      <th>Indicator Code</th>
+      <th>1960</th>
+      <th>1961</th>
+      <th>1962</th>
+      <th>1963</th>
+      <th>1964</th>
+      <th>1965</th>
+      <th>...</th>
+      <th>2012</th>
+      <th>2013</th>
+      <th>2014</th>
+      <th>2015</th>
+      <th>2016</th>
+      <th>2017</th>
+      <th>2018</th>
+      <th>2019</th>
+      <th>2020</th>
+      <th>Unnamed: 65</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Aruba</td>
+      <td>ABW</td>
+      <td>GDP per capita (current US$)</td>
+      <td>NY.GDP.PCAP.CD</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>24712.493263</td>
+      <td>26441.619936</td>
+      <td>26893.011506</td>
+      <td>28396.908423</td>
+      <td>28452.170615</td>
+      <td>29350.805019</td>
+      <td>30253.279358</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Africa Eastern and Southern</td>
+      <td>AFE</td>
+      <td>GDP per capita (current US$)</td>
+      <td>NY.GDP.PCAP.CD</td>
+      <td>147.612227</td>
+      <td>147.014904</td>
+      <td>156.189192</td>
+      <td>182.243917</td>
+      <td>162.347592</td>
+      <td>180.214908</td>
+      <td>...</td>
+      <td>1736.166560</td>
+      <td>1713.899299</td>
+      <td>1703.596298</td>
+      <td>1549.037940</td>
+      <td>1431.778723</td>
+      <td>1573.063386</td>
+      <td>1574.978648</td>
+      <td>1530.059177</td>
+      <td>1359.618224</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>GDP per capita (current US$)</td>
+      <td>NY.GDP.PCAP.CD</td>
+      <td>59.773234</td>
+      <td>59.860900</td>
+      <td>58.458009</td>
+      <td>78.706429</td>
+      <td>82.095307</td>
+      <td>101.108325</td>
+      <td>...</td>
+      <td>638.845852</td>
+      <td>624.315455</td>
+      <td>614.223342</td>
+      <td>556.007221</td>
+      <td>512.012778</td>
+      <td>516.679862</td>
+      <td>485.668419</td>
+      <td>494.179350</td>
+      <td>516.747871</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Africa Western and Central</td>
+      <td>AFW</td>
+      <td>GDP per capita (current US$)</td>
+      <td>NY.GDP.PCAP.CD</td>
+      <td>107.932233</td>
+      <td>113.081647</td>
+      <td>118.831107</td>
+      <td>123.442888</td>
+      <td>131.854402</td>
+      <td>138.526332</td>
+      <td>...</td>
+      <td>1965.118485</td>
+      <td>2157.481149</td>
+      <td>2212.853135</td>
+      <td>1894.310195</td>
+      <td>1673.835527</td>
+      <td>1613.473553</td>
+      <td>1704.139603</td>
+      <td>1777.918672</td>
+      <td>1710.073363</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Angola</td>
+      <td>AGO</td>
+      <td>GDP per capita (current US$)</td>
+      <td>NY.GDP.PCAP.CD</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>5100.097027</td>
+      <td>5254.881126</td>
+      <td>5408.411700</td>
+      <td>4166.979833</td>
+      <td>3506.073128</td>
+      <td>4095.810057</td>
+      <td>3289.643995</td>
+      <td>2809.626088</td>
+      <td>1776.166868</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 66 columns</p>
+</div></div></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-3">
+<h1>Exercício 3<a class="headerlink" href="#exercicio-3" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: usar o <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> para plotar um histograma para visualizar distribuições</em></p>
+<p>Um histograma é um tipo especial de gráfico de barras. A altura de cada barra corresponde ao número de elementos no conjunto cujo valor está em um determinado intervalo.</p>
+<ol class="arabic simple">
+<li><p>Qual é o típico PIB per capita de países em 1990?</p></li>
+<li><p>O que acontece se modificarmos o valor do parâmetro “bins”?</p></li>
+<li><p>Modifique o código para mostrar o histograma do PIB per capita em 2020.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">gdp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;2020&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gdp</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;PIB per capita (US$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cff7ffe700689a45c1378edde13a8896c78fd5e4cd2b9259239b0bf036e945e3.png" src="_images/cff7ffe700689a45c1378edde13a8896c78fd5e4cd2b9259239b0bf036e945e3.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-4">
+<h1>Exercício 4<a class="headerlink" href="#exercicio-4" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: desenhar histogramas com diversos conjuntos de dados para evidenciar diferenças entre eles</em></p>
+<p>Uma vantagem de usar figuras é que elas permitem visualizar diferenças entre dados. Para evidenciar diferenças, é importante colocar lado a lado os elementos que queremos diferenciar.</p>
+<ol class="arabic simple">
+<li><p>No histograma gerado pelo código abaixo, o que podemos dizer sobre o que aconteceu com o PIB per capita no mundo entre 1960 e 1970?</p></li>
+<li><p>Que tipo de construção é usada para selecionar várias colunas de um <code class="docutils literal notranslate"><span class="pre">dataframe</span></code>?</p></li>
+<li><p>Modifique o trecho de código e verifique o que aconteceu com o PIB per capita no mundo década a década.</p></li>
+<li><p>Até quantas cores você consegue colocar no gráfico e ainda visualizar os resultados tranquilamente?</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">gdp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;1960&#39;</span><span class="p">,</span><span class="s1">&#39;2020&#39;</span><span class="p">]]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gdp</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">multiple</span><span class="o">=</span><span class="s2">&quot;dodge&quot;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;PIB per capita (US$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7bea492844fdafc3862fc6cb5686fcff617d089efaebee867024f48009e4e2fd.png" src="_images/7bea492844fdafc3862fc6cb5686fcff617d089efaebee867024f48009e4e2fd.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-5">
+<h1>Exercício 5<a class="headerlink" href="#exercicio-5" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: calcular a média de um conjunto de dados para evidenciar como o conjunto se comporta</em></p>
+<p>A média é o valor que obtemos quando somamos todos os valores de um conjunto de dados e dividimos pelo número de elementos desse conjunto. Por exemplo, a média de <span class="math notranslate nohighlight">\({1, 2, 3, 4}\)</span> é <span class="math notranslate nohighlight">\( (1+2+3+4) / 4 = 10/4 = 2.5\)</span>.</p>
+<p>O trecho de código abaixo mostra como calcular a média de uma coluna de um <code class="docutils literal notranslate"><span class="pre">dataframe</span></code>.</p>
+<p>Faça uma figura mostrando como a média do PIB per capita de todos os países do mundo se comportou desde 1960 até 2020.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdp_medio</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;1960&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdp_medio</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>482.72531432586766
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Faça sua figura aqui</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-6">
+<h1>Exercício 6<a class="headerlink" href="#exercicio-6" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: calcular a mediana de um conjunto de dados para evidenciar como o conjunto se comporta</em></p>
+<p>A mediana é um outro valor que indica a centralidade de um conjunto de dados. Ela é calculada da seguinte forma: os valores do conjunto são ordenados do menor para o maior, e a mediana é o valor correspondente ao elemento central dessa lista.</p>
+<ol class="arabic simple">
+<li><p>Qual é a mediana do conjunto: <span class="math notranslate nohighlight">\({4, 2, 5, 3, 1}\)</span>?</p></li>
+<li><p>No conjunto acima, se trocarmos o elemento <span class="math notranslate nohighlight">\(5\)</span> por <span class="math notranslate nohighlight">\(50\)</span>, quem seria mais afetado: a média ou a mediana?</p></li>
+<li><p>Qual medida (média ou mediana) se refere à expressão “países, em média”? E qual se liga a “o país médio”?</p></li>
+<li><p>O trecho de código abaixo mostra como calcular a mediana de uma coluna de um <code class="docutils literal notranslate"><span class="pre">dataframe</span></code>. Crie um plot que mostra a mediana do PIB per capita de países ao longo dos anos entre 1960 e 2020.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdp_mediano</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;1960&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdp_mediano</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>197.897848206733
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Faça sua figura aqui</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-7">
+<h1>Exercício 7<a class="headerlink" href="#exercicio-7" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: calcular o desvio padrão de um conjunto de dados para entender sua dispersão</em></p>
+<p>O desvio padrão é uma medida de dispersão, isto é, valores maiores do desvio padrão significam que as medidas estão mais “espalhadas”. Ele é calculado como a média do quadrado da diferença em relação à média, ou:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mu = \frac{\sum_{n=1}^{N} x_n}{N}\\
+\\
+\\
+\sigma = \sqrt{\frac{\sum_{n=1}^{N} (x_n-\mu)^2}{N}}
+\end{split}\]</div>
+<p>O desvio padrão significa a diferença esperada entre um elemento qualquer e a média da população. Isso significa que, por exemplo, que se a média de notas de uma população de alunos for 8 e o desvio padrão for 2, então uma pessoa que tirou 7 está a meio desvio padrão da média, o que está dentro do desvio tipicamente esperado. Porém, se o desvio padrão for 0.5, então essa pessoa que tirou 7 está dois desvios padrões longe da média, o que significa uma diferença bem mais atípica.</p>
+<p>O código abaixo permite calcular o desvio padrão de uma coluna de um <code class="docutils literal notranslate"><span class="pre">dataframe</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Faça uma figura mostrando como o desvio padrão do PIB per capita se comporta ao longo do tempo.</p></li>
+<li><p>Faça uma figura mostrando como a razão entre o desvio padrão e a média do PIB per capita se comporta ao longo do tempo.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdp_std</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;1960&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdp_std</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>626.040167865528
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-8">
+<h1>Exercício 8<a class="headerlink" href="#exercicio-8" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: calcular percentis para evidenciar a dispersão em medidas</em></p>
+<p>Uma outra medida de dispersão é o percentil. O <em>x-percentil</em>, ou <em>percentil x</em>, é o valor abaixo do qual está <span class="math notranslate nohighlight">\(x\%\)</span> de seu conjunto. O raciocínio é semelhante ao da mediana. Na verdade, o <em>percentil 50</em> é exatamente a mediana.</p>
+<p>Um <em>quantil</em> é exatamente o mesmo, exceto que ao invés de medir quantidades em porcentagens elas são medidas em frações, isto é, a mediana é o quantil <span class="math notranslate nohighlight">\(0.5\)</span>.</p>
+<p>O código abaixo permite calcular um quantil de uma coluna.</p>
+<p>Existe uma frase muito comumente falada, que é:</p>
+<p><em>Apesar do progresso mundial, os países pobres se tornaram ainda mais pobres nos anos mais recentes</em></p>
+<p>Em contraposição a ela, outras pessoas respondem:</p>
+<p><em>Os países pobres estão muito menos pobres do que já estiveram! O mundo está evoluindo para todos!</em></p>
+<ol class="arabic simple">
+<li><p>Faça uma figura que permita comparar a evolução do PIB per capita nos 3% países mais pobres com a evolução nos 3% mais ricos. Dica: como estamos falando de variações de grandezas, pode ser útil usar o eixo y em escala logaritmica com <code class="docutils literal notranslate"><span class="pre">plt.semilogy()</span></code>.</p></li>
+<li><p>Pela sua figura, como você analisaria as duas frases colocadas acima?</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdp_qnt</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;1960&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdp_qnt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>429.4240015605796
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ano</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1960</span><span class="p">,</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">gdp_pob</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">gdp_ric</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">ano</span><span class="p">:</span>
+    <span class="n">gdp_pob</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">0.03</span><span class="p">))</span>
+    <span class="n">gdp_ric</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">0.97</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ano</span><span class="p">,</span> <span class="n">gdp_pob</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Quantil 0.3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ano</span><span class="p">,</span> <span class="n">gdp_ric</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Quantil 0.97&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b434eb8f1cef8b3fd6dac54f05e0401edeb87c60df61acb67ac4dfae19fe98c8.png" src="_images/b434eb8f1cef8b3fd6dac54f05e0401edeb87c60df61acb67ac4dfae19fe98c8.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-9">
+<h1>Exercício 9<a class="headerlink" href="#exercicio-9" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: plotar e interpretar boxplots</em></p>
+<p>Um boxplot é um tipo de figura muito comum em estatística que mostra a dispersão de um conjunto de dados. Tipicamente, ele marca a mediana e os quantis <span class="math notranslate nohighlight">\(0.25\)</span> e <span class="math notranslate nohighlight">\(0.75\)</span>.</p>
+<p>A diferença entre os quantis <span class="math notranslate nohighlight">\(0.75\)</span> e <span class="math notranslate nohighlight">\(0.25\)</span> é chamada de Inter-Quartile Range (IQR). Elementos cuja distância a um quartil é maior que <span class="math notranslate nohighlight">\(1.5 \times \text{IQR}\)</span> são considerados outliers.</p>
+<p>O código abaixo mostra como fazer um boxplot dos dados de PIB per capita. Modifique o código para mostrar o que está acontecendo com o PIB per capita dos países a cada década desde 1960.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;1960&#39;</span><span class="p">,</span> <span class="s1">&#39;2020&#39;</span><span class="p">]])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/973331f508e0be72ce33edf951e0c5cd59de2956346c6db1eb90d58c35dc9898.png" src="_images/973331f508e0be72ce33edf951e0c5cd59de2956346c6db1eb90d58c35dc9898.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-10">
+<h1>Exercício 10<a class="headerlink" href="#exercicio-10" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: encontrar países em ascenção</em></p>
+<p>É possível calcular valores à partir de colunas de um dataframe - veja este <a class="reference external" href="https://youtu.be/chAinSeQn50">tutorial em vídeo</a>.</p>
+<p>Um indicador de sucesso de um país é o crescimento relativo de seu pib. Para calcular o crescimento relativo do PIB entre 2000 e 2010, por exemplo, podemos usar a fórmula:</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta \text{PIB} = \frac{\text{PIB}_{2010}-\text{PIB}_{2000}}{\text{PIB}_{2000}}
+\]</div>
+<p>Usando essas informações, responda: dos países ativos do Mercosul (Argentina, Brasil, Paraguai e Uruguai), qual teve o maior crescimento relativo entre os anos de 1991 (data de criação do Mercosul) até 2020?</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-11">
+<h1>Exercício 11<a class="headerlink" href="#exercicio-11" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: aplicar as medidas-sumário para analisar dados de indicadores do World Bank e evidenciar alguma informação importante em relação ao mundo</em></p>
+<p>O Banco Mundial disponibiliza um conjunto grande de indicadores relacionados a países. Muitos deles permitem posicionar-se, com base em dados, frente a temas como desnutrição, equidade de gênero, educação, poluição, etc. Em especial, com as técnicas que aprendemos nesta aula, podemos entender como os dados se comportam ao longo do tempo para os diversos países do mundo.</p>
+<ol class="arabic simple">
+<li><p>Navegue pela <a class="reference external" href="https://data.worldbank.org/indicator">base de dados do Banco Mundial</a>. Escolha um indicador para responder à pergunta: “o número de pessoas com acesso a instalações de saneamento básico tem diminuído”.</p></li>
+<li><p>Baixe os dados e certifique-se de que eles estão completos o suficiente para responder à sua pergunta.</p></li>
+<li><p>Usando as técnicas que aprendemos hoje, faça uma figura que evidencie a resposta à sua pergunta.</p></li>
+<li><p>Não esqueça de rotular eixos e colocar título na figura! No título, tanto a pergunta quanto a resposta devem ficar evidentes.</p></li>
+</ol>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01-introducao.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Aula 01</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Aula 2: medidas-sumário</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#texto-introdutorio">Texto introdutório</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-1">Exercício 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-2">Exercício 2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-3">Exercício 3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-4">Exercício 4</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-5">Exercício 5</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-6">Exercício 6</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-7">Exercício 7</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-8">Exercício 8</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-9">Exercício 9</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-10">Exercício 10</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-11">Exercício 11</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Prof. Dr. André Filipe M. Batista
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
