@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>APS 01 - Dados do ENEM &#8212; Ciência de Dados para a Computação</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'APS_01_P01';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Aula 3: Atributos Categóricos" href="03-atributos_categoricos.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_insper.png" class="logo__image only-light" alt="Ciência de Dados para a Computação - Home"/>
+    <script>document.write(`<img src="_static/logo_insper.png" class="logo__image only-dark" alt="Ciência de Dados para a Computação - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Ciência de Dados para a Computação
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-python.html">Warm-up</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="01-introducao.html">Aula 01</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="02-medidas_sumario.html">Aula 2: medidas-sumário</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="03-atributos_categoricos.html">Aula 3: Atributos Categóricos</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">APS 01 - Dados do ENEM</a></li>
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FAPS_01_P01.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/APS_01_P01.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>APS 01 - Dados do ENEM</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">APS 01 - Dados do ENEM</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-1-baixar-e-tratar-os-dados">Parte 1 - Baixar e tratar os dados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-2-a-desigualdade-de-renda">Parte 2 - A desigualdade de renda</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-a-media-das-notas">(a) A média das notas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-o-desvio-padrao-das-notas">(b) O desvio padrão das notas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#entregas-esperadas">Entregas esperadas</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rubricas-e-avaliacao">Rubricas e avaliação</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="aps-01-dados-do-enem">
+<h1>APS 01 - Dados do ENEM<a class="headerlink" href="#aps-01-dados-do-enem" title="Permalink to this heading">#</a></h1>
+<p><a class="reference external" href="https://www.gov.br/inep/pt-br/assuntos/noticias/enem/divulgados-microdados-do-enem-2022">Link para os dados do ENEM</a></p>
+<p>O ENEM (Exame Nacional do Ensino Médio) tem um papel importante na educação brasileira. Os resultados do ENEM permitem avaliar o desempenho de alunos em diferentes escolas, ao passo que o desempenho dos alunos é usado como parte (integral ou parcial) do processo seletivo para ingresso em diversas universidades. Por se tratar de um exame padronizado, ele pode também evidenciar como componentes demográficos ou comportamentais influenciam nos resultados.</p>
+<p>Neste roteiro, usaremos os <em>microdados</em> do ENEM 2022. Os microdados são os dados mais brutos que podemos encontrar - na verdade, tratam-se das notas de <em>cada</em> participante do ENEM individualmente. Nesta atividade, vamos responder à seguinte pergunta:</p>
+<p>Será que a renda familiar de um candidato tem um grande impacto em sua nota?</p>
+<section id="parte-1-baixar-e-tratar-os-dados">
+<h2>Parte 1 - Baixar e tratar os dados<a class="headerlink" href="#parte-1-baixar-e-tratar-os-dados" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Inicialmente, <a class="reference external" href="https://www.gov.br/inep/pt-br/assuntos/noticias/enem/divulgados-microdados-do-enem-2022">baixe os microdados no site do INEP</a>.</p></li>
+<li><p>Verifique que há um dicionário de microdados que explica o significado de cada coluna do dataframe!</p></li>
+<li><p><a class="reference external" href="https://youtu.be/nxSQwTYYwOQ">Abra os microdados</a> em um dataframe. Se preciso, faça ajustes na instrução de leitura para evitar as inconsistências nos dados.</p></li>
+<li><p>Limpe os dados usando <a class="reference external" href="https://youtu.be/maFB5tSKpV8">filtros</a>, removendo treineiros, alunos que não foram fazer alguma das prova, alunos que não tiveram a redação corrigida e outros casos que julgar relevante.</p></li>
+<li><p>Exporte o dataframe resultante do tratamento anterior e salve em um arquivo .csv. Você precisará deste arquivo na segunda parte desta APS.</p></li>
+</ol>
+</section>
+<section id="parte-2-a-desigualdade-de-renda">
+<h2>Parte 2 - A desigualdade de renda<a class="headerlink" href="#parte-2-a-desigualdade-de-renda" title="Permalink to this heading">#</a></h2>
+<section id="a-a-media-das-notas">
+<h3>(a) A média das notas<a class="headerlink" href="#a-a-media-das-notas" title="Permalink to this heading">#</a></h3>
+<p>Já sabemos calcular a média como em:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mu = \frac{\sum_{n=1}^{N} x_n}{N}\\
+\end{split}\]</div>
+<p>Gostaríamos de saber como o desempenho dos alunos tipicamente muda para cada faixa de renda. Para isso, faça um gráfico em que:</p>
+<ol class="arabic simple">
+<li><p>O eixo X representa cada faixa de renda (dica: veja a questão <code class="docutils literal notranslate"><span class="pre">Q006</span></code> no questionário sócio-econômico!)</p></li>
+<li><p>O eixo Y representa as notas de cada uma das provas</p></li>
+<li><p>Decida se este deve ser um gráfico de linhas ou um gráfico de barras!</p></li>
+</ol>
+</section>
+<section id="b-o-desvio-padrao-das-notas">
+<h3>(b) O desvio padrão das notas<a class="headerlink" href="#b-o-desvio-padrao-das-notas" title="Permalink to this heading">#</a></h3>
+<p>Você provavelmente visualizou diferenças entre as médias de desempenhos de alunos de diferentes faixas de renda. Porém, podemos nos perguntar: será que essas diferenças observadas estão dentro das diferenças esperadas para grupos diferentes? Para isso, vamos usar o desvio padrão, como em:</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma = \sqrt{\frac{\sum_{n=1}^{N} (x_n-\mu)^2}{N}}
+\]</div>
+<p>Gostaríamos de avaliar as diferenças entre as médias dos grupos em comparação ao desvio padrão esperado. Para tal, usaremos o coeficiente <em>d de Cohen</em> (<a class="reference external" href="https://en.wikipedia.org/wiki/Effect_size#Cohen's_d">Cohen’s d</a>). Ele é calculado para cada grupo <em>g</em> como:</p>
+<div class="math notranslate nohighlight">
+\[
+d_g = \frac{\mu_g - \mu}{\sigma},
+\]</div>
+<p>onde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d_g\)</span> é o coeficiente <span class="math notranslate nohighlight">\(d\)</span> para o grupo <span class="math notranslate nohighlight">\(g\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu_g\)</span> é a média do grupo <span class="math notranslate nohighlight">\(g\)</span> (no nosso caso, é a nota média para cada faixa de renda)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span> é a média agregada, isto é, a média de notas de todos os participantes do ENEM, e</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma\)</span> é o desvio padrão agregado, isto é, o desvio padrão das notas de todos os participantes do ENEM.</p></li>
+</ul>
+<p>Faça novamente o gráfico do ítem (a), mas substituindo as notas médias de cada faixa de renda <span class="math notranslate nohighlight">\(g\)</span> pelo coeficiente <span class="math notranslate nohighlight">\(d_g\)</span> correspondente.</p>
+<p>Analisando esse novo gráfico, você diria que a renda familiar de um candidato influencia seu desempenho no ENEM? De que forma?</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="entregas-esperadas">
+<h1>Entregas esperadas<a class="headerlink" href="#entregas-esperadas" title="Permalink to this heading">#</a></h1>
+<p>Você deve entregar, via Blackboard, um arquivo PDF (uma entrega por grupo!) contendo:</p>
+<ol class="arabic simple">
+<li><p>Nome do grupo</p></li>
+<li><p>Título do trabalho, que deve ser algo como “Análise da desigualdade de gênero no desempenho do ENEM” (trocando desigualdade de gênero pelo aspecto que você escolheu)</p></li>
+<li><p>A figura gerada na parte 2b,</p></li>
+<li><p>Uma auto-avaliação das figuras e do texto, justificando as notas que foram auto-atribuídas.</p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rubricas-e-avaliacao">
+<h1>Rubricas e avaliação<a class="headerlink" href="#rubricas-e-avaliacao" title="Permalink to this heading">#</a></h1>
+<p>Cada um dos ítens (exceto a auto-avaliação) será avaliado da seguinte forma:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Rubrica</p></th>
+<th class="head"><p>Descrição</p></th>
+<th class="head"><p>Exemplo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>F</p></td>
+<td><p>Não entregue, entregue fora do prazo, entregue fora do escopo (“fiz outra coisa”)</p></td>
+<td><p>Não entregar</p></td>
+</tr>
+<tr class="row-odd"><td><p>E</p></td>
+<td><p>Entregue no prazo e dentro do escopo, mas a entrega tem um ou mais ítens faltando ou só é compreensível se for acompanhado deste enunciado (por exemplo, ao dizer “resposta ao ítem 2” ao invés de ter um título explicativo) ou está ilegível (exemplo: textos sem sentido ou figuras muito grandes / muito pequenas ou em resolução baixa)</p></td>
+<td><p>Colocar no título de uma figura: “ítem 1a”</p></td>
+</tr>
+<tr class="row-even"><td><p>D</p></td>
+<td><p>A entrega tem falhas graves de coesão ou coerência que impedem sua compreensão, ou faltam elementos essenciais (título, legenda, rótulos nos eixos), ou o texto deixa de indicar o que são ideias originais e o que são ideias retiradas de outras fontes, ou as ideias/dados são mostrados de forma embaralhada, sem guiar o leitor a um fluxo de pensamento.</p></td>
+<td><p>Em um texto: “Existe impacto da renda na educação. Isso porque a renda pode estar ligada a condições de estudo. O estudo é essencial para formar seres humanos”</p></td>
+</tr>
+<tr class="row-odd"><td><p>C</p></td>
+<td><p>A entrega não tem falhas graves. Todas as fontes de ideias são indicadas. A entrega traz ao menos um elemento errado ou ao menos um elemento supérfluo (que não contribui para a mensagem passada).</p></td>
+<td><p>Em um texto: “Essa é uma fonte de 100W (Watts, unidade batizada em homenagem a James Watt, inventor da máquina a vapor”)</p></td>
+</tr>
+<tr class="row-even"><td><p>B</p></td>
+<td><p>A entrega tem todos os elementos necessários para passar a mensagem, a mensagem é clara, e não há elementos supérfluos.</p></td>
+<td><p>Título da figura: “Média de desempenho no ENEM 2022 por disciplina por faixa de renda”, com rótulo no eixo Y: “Pontos” e rótulo no eixo X: “faixa de renda”.</p></td>
+</tr>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>A entrega está correta e o conteúdo mostra ou induz uma análise crítica do contexto ou das implicações dos dados e informações coletadas.</p></td>
+<td><p>Título da figura: “Desempenho no ENEM diminui com o aumento da renda”, com rótulo no eixo Y: “Pontos” e rótulo no eixo X: “faixa de renda”.</p></td>
+</tr>
+</tbody>
+</table>
+<p>A auto-avaliação será avaliada da seguinte forma:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Rubrica</p></th>
+<th class="head"><p>Descrição</p></th>
+<th class="head"><p>Exemplo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>F</p></td>
+<td><p>Não entregue, entregue fora do prazo, entregue fora do escopo (“fiz outra coisa”)</p></td>
+<td><p>Não entregar</p></td>
+</tr>
+<tr class="row-odd"><td><p>D</p></td>
+<td><p>Entregue no prazo e dentro do escopo, mas somente copia as rubricas que foram apresentadas, sem relacioná-las com o material apresentado, ou apresenta notas sem argumentar o motivo delas.</p></td>
+<td><p>“Nota A, pois está correto e o conteúdo induz análise crítica do contexto”</p></td>
+</tr>
+<tr class="row-even"><td><p>C</p></td>
+<td><p>Entregue, mas claramente puxa as notas “para cima” ou “para baixo” sem ter argumentos</p></td>
+<td><p>Entrega é uma figura sem título, mas auto-avaliação diz: “o título da figura está correto”</p></td>
+</tr>
+<tr class="row-odd"><td><p>A</p></td>
+<td><p>Entregue, e argumentado corretamente</p></td>
+<td><p>“Nota A porque a passagem <code class="docutils literal notranslate"><span class="pre">de</span> <span class="pre">acordo</span> <span class="pre">com</span> <span class="pre">Fulano</span> <span class="pre">et</span> <span class="pre">al.</span></code> mostra que os resultados obtidos condizem com a literatura”, ou “Nota B, porque a figura tem todos os elementos, embora não tenha nenhuma indicação de uma leitura crítica do contexto.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Para atingir cada nível, é necessário cumprir todos os requisitos do nível anterior. Cada uma das entregas será avaliada individualmente e isoladamente. A nota geral do trabalho será a menor entre as notas das entregas.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03-atributos_categoricos.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Aula 3: Atributos Categóricos</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">APS 01 - Dados do ENEM</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-1-baixar-e-tratar-os-dados">Parte 1 - Baixar e tratar os dados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-2-a-desigualdade-de-renda">Parte 2 - A desigualdade de renda</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-a-media-das-notas">(a) A média das notas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-o-desvio-padrao-das-notas">(b) O desvio padrão das notas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#entregas-esperadas">Entregas esperadas</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rubricas-e-avaliacao">Rubricas e avaliação</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Prof. Dr. André Filipe M. Batista
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
