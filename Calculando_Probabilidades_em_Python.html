@@ -1,0 +1,1143 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>07 - Calculando probabilidades em Python &#8212; Ciência de Dados para a Computação</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Calculando_Probabilidades_em_Python';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="06 - Teorema de Bayes" href="06-bayes.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_insper.png" class="logo__image only-light" alt="Ciência de Dados para a Computação - Home"/>
+    <script>document.write(`<img src="_static/logo_insper.png" class="logo__image only-dark" alt="Ciência de Dados para a Computação - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Ciência de Dados para a Computação
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-python.html">Warm-up</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="01-introducao.html">Aula 01</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="02-medidas_sumario.html">Aula 2: medidas-sumário</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="03-atributos_categoricos.html">Aula 3: Atributos Categóricos</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="APS_01_P01.html">APS 01 - Dados do ENEM</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="APS_01_P02-2.html">APS 01 - Continuação</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="05-probabilidades.html">05 - Probabilidades, probabilidades conjuntas e probabilidades condicionais</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="06-bayes.html">06 - Teorema de Bayes</a></li>
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">07 -  Calculando probabilidades em Python</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FCalculando_Probabilidades_em_Python.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Calculando_Probabilidades_em_Python.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>07 -  Calculando probabilidades em Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">07 -  Calculando probabilidades em Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lancamento-de-uma-moeda">Lançamento de uma moeda</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e-se-a-moeda-nao-for-justa">E se a moeda não for justa?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exemplo-1">Exemplo 1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-1">Exercício 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculando-probabilidades-de-um-possivel-valor-dentro-de-um-intervalo">Calculando probabilidades de um possível valor dentro de um intervalo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lancando-10-moedas-e-uma-introducao-a-distribuicao-binomial">Lançando 10 moedas e uma introdução a distribuição binomial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mais-um-problema-amostra-com-reposicao">Mais um problema - Amostra com reposição</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="calculando-probabilidades-em-python">
+<h1>07 -  Calculando probabilidades em Python<a class="headerlink" href="#calculando-probabilidades-em-python" title="Permalink to this heading">#</a></h1>
+<section id="lancamento-de-uma-moeda">
+<h2>Lançamento de uma moeda<a class="headerlink" href="#lancamento-de-uma-moeda" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">espaco_amostral</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cara&#39;</span><span class="p">,</span> <span class="s1">&#39;coroa&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">probabilidade_cara</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;A probabilidade de cara é </span><span class="si">{</span><span class="n">probabilidade_cara</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A probabilidade de cara é 0.5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">resultado_cara</span><span class="p">(</span><span class="n">desfecho</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">desfecho</span> <span class="o">==</span> <span class="s1">&#39;cara&#39;</span>
+
+<span class="k">def</span> <span class="nf">resultado_coroa</span><span class="p">(</span><span class="n">desfecho</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">desfecho</span> <span class="o">==</span> <span class="s1">&#39;coroa&#39;</span>
+
+<span class="k">def</span> <span class="nf">resultado_qualquer</span><span class="p">(</span><span class="n">desfecho</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">desfecho</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;cara&#39;</span><span class="p">,</span> <span class="s1">&#39;coroa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Criando uma função que detecta eventos de interesse</span>
+
+<span class="k">def</span> <span class="nf">obtem_evento_interesse</span><span class="p">(</span><span class="n">condicao_evento</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">):</span>
+  <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">desfecho</span> <span class="k">for</span> <span class="n">desfecho</span> <span class="ow">in</span> <span class="n">espaco_amostral</span> <span class="k">if</span> <span class="n">condicao_evento</span><span class="p">(</span><span class="n">desfecho</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condicoes</span> <span class="o">=</span> <span class="p">[</span><span class="n">resultado_cara</span><span class="p">,</span> <span class="n">resultado_coroa</span><span class="p">,</span> <span class="n">resultado_qualquer</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">condicao</span> <span class="ow">in</span> <span class="n">condicoes</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Condição </span><span class="si">{</span><span class="n">condicao</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="n">evento</span> <span class="o">=</span> <span class="n">obtem_evento_interesse</span><span class="p">(</span><span class="n">condicao</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;evento: </span><span class="si">{</span><span class="n">evento</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Condição resultado_cara
+evento: {&#39;cara&#39;}
+Condição resultado_coroa
+evento: {&#39;coroa&#39;}
+Condição resultado_qualquer
+evento: {&#39;cara&#39;, &#39;coroa&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calcula_probabilidade</span><span class="p">(</span><span class="n">evento_interesse</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">):</span>
+  <span class="n">evento</span> <span class="o">=</span> <span class="n">obtem_evento_interesse</span><span class="p">(</span><span class="n">evento_interesse</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">evento</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">condicao</span> <span class="ow">in</span> <span class="n">condicoes</span><span class="p">:</span>
+  <span class="n">prob</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">condicao</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">)</span>
+  <span class="n">nome</span> <span class="o">=</span> <span class="n">condicao</span><span class="o">.</span><span class="vm">__name__</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;A probabilidade do evento </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s1"> acontecer é de </span><span class="si">{</span><span class="n">prob</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A probabilidade do evento resultado_cara acontecer é de 0.5
+A probabilidade do evento resultado_coroa acontecer é de 0.5
+A probabilidade do evento resultado_qualquer acontecer é de 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<section id="e-se-a-moeda-nao-for-justa">
+<h3>E se a moeda não for justa?<a class="headerlink" href="#e-se-a-moeda-nao-for-justa" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">espaco_amostral_ponderado</span><span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cara&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;coroa&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tamanho_espaco_amostral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">espaco_amostral_ponderado</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evento</span> <span class="o">=</span> <span class="n">obtem_evento_interesse</span><span class="p">(</span><span class="n">resultado_qualquer</span><span class="p">,</span> <span class="n">espaco_amostral_ponderado</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qtd_eventos</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">espaco_amostral_ponderado</span><span class="p">[</span><span class="n">desfecho</span><span class="p">]</span> <span class="k">for</span> <span class="n">desfecho</span> <span class="ow">in</span> <span class="n">evento</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qtd_eventos</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calcula_probabilidade</span><span class="p">(</span><span class="n">condicao_interesse</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">):</span>
+  <span class="n">evento</span> <span class="o">=</span> <span class="n">obtem_evento_interesse</span><span class="p">(</span><span class="n">condicao_interesse</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="nb">set</span><span class="p">()):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">evento</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">)</span>
+  <span class="n">qtd_eventos</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">[</span><span class="n">desfecho</span><span class="p">]</span> <span class="k">for</span> <span class="n">desfecho</span> <span class="ow">in</span> <span class="n">evento</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">qtd_eventos</span><span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">resultado_coroa</span><span class="p">,</span> <span class="n">espaco_amostral_ponderado</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">resultado_coroa</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exemplo-1">
+<h1>Exemplo 1<a class="headerlink" href="#exemplo-1" title="Permalink to this heading">#</a></h1>
+<p>Suponha que uma família tenha quatro filhos. Qual é a probabilidade de que exatamente duas das crianças sejam meninos? Assumiremos que cada criança tem a mesma probabilidade de ser um menino ou uma menina</p>
+<p>Para resolver esse problema, podemos usar a teoria das probabilidades. O espaço amostral para o gênero de quatro crianças, assumindo que cada criança tem igual probabilidade de ser menino (M) ou menina (F), pode ser representado por todas as combinações possíveis de meninos e meninas. Há (<span class="math notranslate nohighlight">\(2^4 = 16\)</span>) combinações possíveis, uma vez que cada criança tem 2 possibilidades (menino ou menina) e há 4 crianças.</p>
+<p>Para encontrar a probabilidade de que exatamente duas das crianças sejam meninos, precisamos contar o número de combinações em que isso ocorre. Podemos usar a fórmula de combinação para calcular isso, a fórmula é:</p>
+<p><span class="math notranslate nohighlight">\(C(n, k) = \frac{n!}{k!(n-k)!}\)</span></p>
+<p>onde (n) é o número total de crianças (4 neste caso) e (k) é o número de meninos (2 neste caso). Assim, o número de maneiras de escolher 2 meninos de 4 crianças é:</p>
+<p><span class="math notranslate nohighlight">\(C(4, 2) = \frac{4!}{2!(4-2)!}\)</span></p>
+<p>Depois de calcular isso, a probabilidade é simplesmente o número de combinações favoráveis (exatamente 2 meninos) dividido pelo número total de combinações possíveis (16). Dessa forma, a probabilidade de que exatamente duas das quatro crianças sejam meninos é de 0,375 ou 37,5%.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">possiveis_resultados</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;menino&#39;</span><span class="p">,</span> <span class="s1">&#39;menina&#39;</span><span class="p">]</span>
+<span class="n">espaco_amostral</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">filho1</span> <span class="ow">in</span> <span class="n">possiveis_resultados</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">filho2</span> <span class="ow">in</span> <span class="n">possiveis_resultados</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">filho3</span> <span class="ow">in</span> <span class="n">possiveis_resultados</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">filho4</span> <span class="ow">in</span> <span class="n">possiveis_resultados</span><span class="p">:</span>
+        <span class="n">desfecho</span> <span class="o">=</span> <span class="p">(</span><span class="n">filho1</span><span class="p">,</span> <span class="n">filho2</span><span class="p">,</span> <span class="n">filho3</span><span class="p">,</span> <span class="n">filho4</span><span class="p">)</span>
+        <span class="n">espaco_amostral</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">desfecho</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ter_dois_meninos</span><span class="p">(</span><span class="n">desfecho</span><span class="p">):</span>
+  <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">filho</span> <span class="k">for</span> <span class="n">filho</span> <span class="ow">in</span> <span class="n">desfecho</span> <span class="k">if</span> <span class="n">filho</span> <span class="o">==</span> <span class="s1">&#39;menino&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">ter_dois_meninos</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;A probabilidade de nascer dois meninos nos 4 filhos é de </span><span class="si">{</span><span class="n">prob</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A probabilidade de nascer dois meninos nos 4 filhos é de 0.375
+</pre></div>
+</div>
+</div>
+</div>
+<p>Estamos calculando todas as combinações de uma maneira não muito eficiente. Vamos melhorar isso com a biblioteca itertools.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">todas_combinacoes</span> <span class="o">=</span> <span class="n">product</span><span class="p">(</span><span class="n">possiveis_resultados</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">todas_combinacoes</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">ter_dois_meninos</span><span class="p">,</span> <span class="nb">set</span><span class="p">(</span><span class="n">todas_combinacoes</span><span class="p">))</span> <span class="c1">## execute antes o todas_combinacoes = product...</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [25],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">prob</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">ter_dois_meninos</span><span class="p">,</span> <span class="nb">set</span><span class="p">(</span><span class="n">todas_combinacoes</span><span class="p">))</span>
+
+<span class="nn">Input In [14],</span> in <span class="ni">calcula_probabilidade</span><span class="nt">(condicao_interesse, espaco_amostral)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">evento</span> <span class="o">=</span> <span class="n">obtem_evento_interesse</span><span class="p">(</span><span class="n">condicao_interesse</span><span class="p">,</span> <span class="n">espaco_amostral</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="nb">set</span><span class="p">()):</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>   <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">evento</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">qtd_eventos</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="p">[</span><span class="n">desfecho</span><span class="p">]</span> <span class="k">for</span> <span class="n">desfecho</span> <span class="ow">in</span> <span class="n">evento</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">return</span> <span class="n">qtd_eventos</span><span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">espaco_amostral</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="ne">ZeroDivisionError</span>: division by zero
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.375
+</pre></div>
+</div>
+</div>
+</div>
+<section id="exercicio-1">
+<h2>Exercício 1<a class="headerlink" href="#exercicio-1" title="Permalink to this heading">#</a></h2>
+<p>Suponha que nos seja mostrado um dado justo de seis faces cujas faces estão numeradas de 1 a 6. O dado é lançado seis vezes. Qual é a probabilidade de que esses seis lançamentos de dados somem 21?</p>
+</section>
+<section id="calculando-probabilidades-de-um-possivel-valor-dentro-de-um-intervalo">
+<h2>Calculando probabilidades de um possível valor dentro de um intervalo<a class="headerlink" href="#calculando-probabilidades-de-um-possivel-valor-dentro-de-um-intervalo" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">esta_em_um_intervalo</span><span class="p">(</span><span class="n">valor</span><span class="p">,</span> <span class="n">minimo</span><span class="p">,</span> <span class="n">maximo</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">minimo</span> <span class="o">&lt;=</span> <span class="n">valor</span> <span class="o">&lt;=</span> <span class="n">maximo</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">esta_em_um_intervalo</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="n">espaco_amostral_ponderado</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">desfecho</span> <span class="ow">in</span> <span class="n">espaco_amostral</span><span class="p">:</span>
+  <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">desfecho</span><span class="p">)</span>
+  <span class="n">espaco_amostral_ponderado</span><span class="p">[</span><span class="n">total</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">totais</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">espaco_amostral_ponderado</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">frequencias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">espaco_amostral_ponderado</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1"># Plotando o gráfico de barras</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>  <span class="c1"># Define o tamanho da figura</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">totais</span><span class="p">,</span> <span class="n">frequencias</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>  <span class="c1"># Cria barras com os totais e suas respectivas frequências</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribuição de Soma dos Lançamentos de Dado&#39;</span><span class="p">)</span>  <span class="c1"># Título do gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Soma Total&#39;</span><span class="p">)</span>  <span class="c1"># Rótulo do eixo X</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequência&#39;</span><span class="p">)</span>  <span class="c1"># Rótulo do eixo Y</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">totais</span><span class="p">)</span>  <span class="c1"># Garante que todos os totais sejam mostrados no eixo X</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># Exibe o gráfico</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d2b266fab20ec2de72f9a12d4e3b2ba06bc0cf6aebaaeebde479909d559f0dfd.png" src="_images/d2b266fab20ec2de72f9a12d4e3b2ba06bc0cf6aebaaeebde479909d559f0dfd.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">totais</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">espaco_amostral_ponderado</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">frequencias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">espaco_amostral_ponderado</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">proba</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">espaco_amostral_ponderado</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">frequencias</span><span class="p">]</span>
+
+<span class="c1"># Plotando o gráfico de barras</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>  <span class="c1"># Define o tamanho da figura</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">totais</span><span class="p">,</span> <span class="n">proba</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">)</span>  <span class="c1"># Cria barras com os totais e suas respectivas frequências</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Probabilidade da Soma dos Lançamentos de Dado&#39;</span><span class="p">)</span>  <span class="c1"># Título do gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Soma Total&#39;</span><span class="p">)</span>  <span class="c1"># Rótulo do eixo X</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probabilidade&#39;</span><span class="p">)</span>  <span class="c1"># Rótulo do eixo Y</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">totais</span><span class="p">)</span>  <span class="c1"># Garante que todos os totais sejam mostrados no eixo X</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># Exibe o gráfico</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/23de044efc1143216ccde36edde434a370e437f28c72f276d529e3c39c033be4.png" src="_images/23de044efc1143216ccde36edde434a370e437f28c72f276d529e3c39c033be4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">esta_em_um_intervalo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">espaco_amostral_ponderado</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.45177469135802467
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="lancando-10-moedas-e-uma-introducao-a-distribuicao-binomial">
+<h2>Lançando 10 moedas e uma introdução a distribuição binomial<a class="headerlink" href="#lancando-10-moedas-e-uma-introducao-a-distribuicao-binomial" title="Permalink to this heading">#</a></h2>
+<p>Suponha o lançamento de 10 moedas justas. Qual a probabilidade de obter um número maior ou igual a 8 caras nesse experimento?</p>
+<p>Vamos aprender nas próximas aulas, que para calcular a probabilidade de obter 8 ou mais caras ao lançar 10 moedas justas, podemos utilizar a distribuição binomial. A distribuição binomial está intimamente relacionada ao experimento de Bernoulli, ambos conceitos fundamentais em teoria da probabilidade.</p>
+<p>Um experimento de Bernoulli é um experimento aleatório que tem apenas dois resultados possíveis, comumente chamados de “sucesso” e “fracasso”. A probabilidade de sucesso é denotada por (p) e a probabilidade de fracasso é (1-p). Lançar uma moeda (considerando cara como sucesso, por exemplo) e lançar um dado (considerando obter um seis como sucesso, por exemplo) são exemplos de experimentos de Bernoulli, desde que se esteja interessado em apenas um resultado (sucesso) em detrimento do outro (fracasso).</p>
+<p>A distribuição binomial é usada para modelar o número de sucessos em
+n ensaios independentes de Bernoulli, cada um com a mesma probabilidade de sucesso p. Neste caso, um sucesso pode ser definido como obter “cara” em um lançamento de moeda, e a probabilidade de sucesso p é de 0,5, pois a moeda é justa.</p>
+<p>A fórmula da probabilidade binomial é:</p>
+<p><span class="math notranslate nohighlight">\(
+P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
+\)</span></p>
+<p>onde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\((P(X = k))\)</span> é a probabilidade de obter exatamente <span class="math notranslate nohighlight">\((k)\)</span> sucessos em <span class="math notranslate nohighlight">\((n)\)</span> tentativas,</p></li>
+<li><p><span class="math notranslate nohighlight">\((\binom{n}{k})\)</span> é o coeficiente binomial que calcula o número de maneiras de escolher <span class="math notranslate nohighlight">\((k)\)</span> sucessos de <span class="math notranslate nohighlight">\((n)\)</span> tentativas,</p></li>
+<li><p><span class="math notranslate nohighlight">\((p)\)</span> é a probabilidade de sucesso em cada tentativa,</p></li>
+<li><p><span class="math notranslate nohighlight">\((n)\)</span> é o número total de tentativas,</p></li>
+<li><p><span class="math notranslate nohighlight">\((k)\)</span> é o número de sucessos desejados.</p></li>
+</ul>
+<p>Para calcular a probabilidade de obter 8 ou mais caras em 10 lançamentos, somamos as probabilidades de obter exatamente 8 caras, exatamente 9 caras, e exatamente 10 caras:</p>
+<p><span class="math notranslate nohighlight">\(
+P(X \geq 8) = P(X = 8) + P(X = 9) + P(X = 10)
+\)</span></p>
+<p>A probabilidade de obter 8 ou mais caras ao lançar 10 moedas justas é de aproximadamente 0,0547, ou 5,47%.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gera_espaco_amostral_moedas</span><span class="p">(</span><span class="n">jogadas</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+  <span class="n">espaco_amostral_ponderado</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">lancamento</span> <span class="ow">in</span> <span class="n">product</span><span class="p">([</span><span class="s1">&#39;cara&#39;</span><span class="p">,</span> <span class="s1">&#39;coroa&#39;</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="n">jogadas</span><span class="p">):</span>
+    <span class="n">qtd_caras</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">desfecho</span> <span class="k">for</span> <span class="n">desfecho</span> <span class="ow">in</span> <span class="n">lancamento</span> <span class="k">if</span> <span class="n">desfecho</span> <span class="o">==</span> <span class="s1">&#39;cara&#39;</span><span class="p">])</span>
+    <span class="n">espaco_amostral_ponderado</span><span class="p">[</span><span class="n">qtd_caras</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">espaco_amostral_ponderado</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">espaco_amostral_moedas</span> <span class="o">=</span> <span class="n">gera_espaco_amostral_moedas</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">totais</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">espaco_amostral_moedas</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">frequencias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">espaco_amostral_moedas</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1"># Plotando o gráfico de barras</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>  <span class="c1"># Define o tamanho da figura</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">totais</span><span class="p">,</span> <span class="n">frequencias</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>  <span class="c1"># Cria barras com os totais e suas respectivas frequências</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribuição da Qtd de Caras ao lançar 10 moedas&#39;</span><span class="p">)</span>  <span class="c1"># Título do gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Qtd caras&#39;</span><span class="p">)</span>  <span class="c1"># Rótulo do eixo X</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequência&#39;</span><span class="p">)</span>  <span class="c1"># Rótulo do eixo Y</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">totais</span><span class="p">)</span>  <span class="c1"># Garante que todos os totais sejam mostrados no eixo X</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># Exibe o gráfico</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3a6da9223c8333e1743d9a92ad15fc134c6143160e500ccbafa967543fcfcb1a.png" src="_images/3a6da9223c8333e1743d9a92ad15fc134c6143160e500ccbafa967543fcfcb1a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">esta_em_um_intervalo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">espaco_amostral_moedas</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;A probabilidade de obter 8 ou mais caras em um experimento de lançamento de 10 moedas é de </span><span class="si">{</span><span class="n">prob</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A probabilidade de obter 8 ou mais caras em um experimento de lançamento de 10 moedas é de 0.0546875
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">oito_caras</span><span class="p">(</span><span class="n">desfecho</span><span class="p">):</span>
+  <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">face</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">desfecho</span> <span class="k">if</span> <span class="n">face</span> <span class="o">==</span> <span class="s1">&#39;cara&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">8</span>
+
+<span class="k">def</span> <span class="nf">nove_caras</span><span class="p">(</span><span class="n">desfecho</span><span class="p">):</span>
+  <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">face</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">desfecho</span> <span class="k">if</span> <span class="n">face</span> <span class="o">==</span> <span class="s1">&#39;cara&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">9</span>
+
+<span class="k">def</span> <span class="nf">dez_caras</span><span class="p">(</span><span class="n">desfecho</span><span class="p">):</span>
+  <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">face</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">desfecho</span> <span class="k">if</span> <span class="n">face</span> <span class="o">==</span> <span class="s1">&#39;cara&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">espaco_moedas</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">product</span><span class="p">([</span><span class="s1">&#39;cara&#39;</span><span class="p">,</span> <span class="s1">&#39;coroa&#39;</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob8</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">oito_caras</span><span class="p">,</span> <span class="n">espaco_moedas</span><span class="p">)</span>
+<span class="n">prob9</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">nove_caras</span><span class="p">,</span> <span class="n">espaco_moedas</span><span class="p">)</span>
+<span class="n">prob10</span> <span class="o">=</span> <span class="n">calcula_probabilidade</span><span class="p">(</span><span class="n">dez_caras</span><span class="p">,</span> <span class="n">espaco_moedas</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;A probabilidade de obter 8 ou mais caras é de </span><span class="si">{</span><span class="n">prob8</span><span class="o">+</span><span class="n">prob9</span><span class="o">+</span><span class="n">prob10</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A probabilidade de obter 8 ou mais caras é de 0.0546875
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mais-um-problema-amostra-com-reposicao">
+<h2>Mais um problema - Amostra com reposição<a class="headerlink" href="#mais-um-problema-amostra-com-reposicao" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Uma caixa contém 10 bolas brancas, 20 bolas vermelhas e 30 bolas verdes. Se tirarmos 5 bolas da caixa com reposição (pegamos a bola, observamos de que cor ela é e colocamos de volta na caixa). Queremos saber a probabilidade de:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Pegue 3 brancas e 2 vermelhas.</p></li>
+<li><p>Pegue tudo da mesma cor.</p></li>
+</ul>
+<p>Execute o experimento 1000 vezes e calcule as probabilidades acima.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">caixa</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">caixa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Branca&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">):</span>
+        <span class="n">caixa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Vermelha&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">caixa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Verde&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># faça aqui a sua solução</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="06-bayes.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">06 - Teorema de Bayes</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">07 -  Calculando probabilidades em Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lancamento-de-uma-moeda">Lançamento de uma moeda</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e-se-a-moeda-nao-for-justa">E se a moeda não for justa?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exemplo-1">Exemplo 1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-1">Exercício 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculando-probabilidades-de-um-possivel-valor-dentro-de-um-intervalo">Calculando probabilidades de um possível valor dentro de um intervalo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lancando-10-moedas-e-uma-introducao-a-distribuicao-binomial">Lançando 10 moedas e uma introdução a distribuição binomial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mais-um-problema-amostra-com-reposicao">Mais um problema - Amostra com reposição</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Prof. Dr. André Filipe M. Batista
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
