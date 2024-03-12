@@ -1,0 +1,803 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Variáveis Aleatórias Discretas &#8212; Ciência de Dados para a Computação</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '08-amostras';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_insper.png" class="logo__image only-light" alt="Ciência de Dados para a Computação - Home"/>
+    <script>document.write(`<img src="_static/logo_insper.png" class="logo__image only-dark" alt="Ciência de Dados para a Computação - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Ciência de Dados para a Computação
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-python.html">Warm-up</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="01-introducao.html">Aula 01</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="02-medidas_sumario.html">Aula 2: medidas-sumário</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="03-atributos_categoricos.html">Aula 3: Atributos Categóricos</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="APS_01_P01.html">APS 01 - Dados do ENEM</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="APS_01_P02-2.html">APS 01 - Continuação</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="05-probabilidades.html">05 - Probabilidades, probabilidades conjuntas e probabilidades condicionais</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="06-bayes.html">06 - Teorema de Bayes</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Calculando_Probabilidades_em_Python.html">07 -  Calculando probabilidades em Python</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F08-amostras.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/08-amostras.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Variáveis Aleatórias Discretas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Variáveis Aleatórias Discretas</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#texto-introdutorio">Texto introdutório</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-1">Exercício 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-2">Exercício 2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribuicoes">Distribuições</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enunciado-do-exercicio">Enunciado do exercício</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-3">Exercício 3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propriedades-de-distribuicoes">Propriedades de distribuições</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemplo-calculo-da-media-e-da-variancia-em-uma-jogada-de-moedas">EXEMPLO: Cálculo da média e da variância em uma jogada de moedas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Enunciado do exercício</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Exercício 3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-4">Exercício 4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#somando-variaveis-aleatorias-independentes">Somando variáveis aleatórias independentes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemplo">Exemplo</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Enunciado do exercício</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-5">Exercício 5</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="variaveis-aleatorias-discretas">
+<h1>Variáveis Aleatórias Discretas<a class="headerlink" href="#variaveis-aleatorias-discretas" title="Permalink to this heading">#</a></h1>
+<p><strong>Objetivo da aula</strong>: ao fim desta aula, o aluno será capaz de diferenciar amostras de populações, e usar probabilidades estimadas para descrever populações no caso discreto.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="texto-introdutorio">
+<h1>Texto introdutório<a class="headerlink" href="#texto-introdutorio" title="Permalink to this heading">#</a></h1>
+<p>Até o momento, nós estamos assumindo que nossos dados representam toda a população que nos interessa: temos dados de todos os países do mundo, ou então de todos os clientes do iFood, ou então sobre todas as medições de uma estação metereológica. Em várias situações, isso é absolutamente plausível (afinal, nós mesmos conseguimos esses dados), mas em algumas situações é absolutamente infactível. Um exemplo disso é quando fazemos um teste em pequena escala para avaliar um tratamento, uma intervenção de marketing ou uma nova interface de um sistema. Nesse caso, nossos dados representam somente uma <em>amostra</em> de nossa <em>população</em>.</p>
+<p>A consequência disso é que não somos mais capazes de calcular diretamente a média <span class="math notranslate nohighlight">\(\mu\)</span> e o desvio padrão <span class="math notranslate nohighlight">\(\sigma\)</span>. Ao invés disso, precisamos usar as estimativas correspondentes <span class="math notranslate nohighlight">\(\bar{X}\)</span> e <span class="math notranslate nohighlight">\(s\)</span>. O cálculo deles é bastante semelhante às contrapartidas populacionais, exceto pelo denominados <span class="math notranslate nohighlight">\(N-1\)</span> em <span class="math notranslate nohighlight">\(s\)</span>:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Conceito</p></th>
+<th class="head"><p>População</p></th>
+<th class="head"><p>Amostra</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Definição</p></td>
+<td><p>Conjunto de todos os indivíduos de um determinado grupo</p></td>
+<td><p>Conjunto com alguns elementos de uma população, escolhidos (ou <em>amostrados</em>) aleatoriamente</p></td>
+</tr>
+<tr class="row-odd"><td><p>Centralidade</p></td>
+<td><p>Média populacional:  <span class="math notranslate nohighlight">\(\mu = \sum_{n=1}^N{x_n}/N\)</span></p></td>
+<td><p>Média amostral:  <span class="math notranslate nohighlight">\(\bar{X} = \sum_{n=1}^N{x_n}/N\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Dispersão</p></td>
+<td><p>Desvio padrão populacional: <span class="math notranslate nohighlight">\(\sigma = \sqrt{\sum_{n=1}^N ({x_n}-\mu)^2/N}\)</span></p></td>
+<td><p>Desvio padrão amostral: <span class="math notranslate nohighlight">\(s =  \sqrt{\sum_{n=1}^N ({x_n}-\bar{X})^2/(N-1)}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>A <em>interpretação</em> deles, porém, é bastante diferente. Quando usamos <span class="math notranslate nohighlight">\(\mu\)</span>, temos os dados de toda nossa população. Quando usamos <span class="math notranslate nohighlight">\(\bar{X}\)</span>, porém, a informação é somente uma <em>estimativa</em> de <span class="math notranslate nohighlight">\(\mu\)</span>. Por exemplo: não podemos (em princípio) medir a altura de todas as pessoas do mundo para calcular a média de altura da humanidade (que seria <span class="math notranslate nohighlight">\(\mu\)</span>), mas podemos calcular a média de altura de algumas pessoas (gerando <span class="math notranslate nohighlight">\(\bar{X}\)</span>) e então usar esse valor como uma estimativa de <span class="math notranslate nohighlight">\(\mu\)</span>. O mesmo vale para a relação entre <span class="math notranslate nohighlight">\(\sigma\)</span> e <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<p><strong>importante: por padrão, o <code class="docutils literal notranslate"><span class="pre">pandas</span></code> calcula a média e o desvio padrão <em>amostrais</em>.</strong></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-1">
+<h1>Exercício 1<a class="headerlink" href="#exercicio-1" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: descrever a diferença entre as médias populacional e amostral</em></p>
+<p>O código abaixo usa os dados que temos sobre o florestamento em países. Nele, calculamos a média populacional <span class="math notranslate nohighlight">\(\mu\)</span> e a média amostral <span class="math notranslate nohighlight">\(\bar{X}\)</span> para uma amostra de <span class="math notranslate nohighlight">\(N\)</span> países em 2020.</p>
+<ol class="arabic simple">
+<li><p>Por que <span class="math notranslate nohighlight">\(\mu\)</span> não muda quando executamos o código novamente?</p></li>
+<li><p>Por que <span class="math notranslate nohighlight">\(\bar{X}\)</span> muda?</p></li>
+<li><p>Faça um histograma dos valores de <span class="math notranslate nohighlight">\(\bar{X}\)</span> se executarmos o processo de amostragem 1000 vezes.</p></li>
+<li><p>Faça um outro histograma para <span class="math notranslate nohighlight">\(\bar{X}\)</span>, também executando o processo de amostragem 1000 vezes, mas agora alterando o valor de <span class="math notranslate nohighlight">\(N\)</span> para 30. Qual foi a diferença observada?</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_area_florestal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;dados/WorldBank/API_AG.LND.FRST.ZS_DS2_en_csv_v2_3731376.csv&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">df_area_florestal</span><span class="p">[</span><span class="s1">&#39;2020&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">xbar</span> <span class="o">=</span> <span class="n">df_area_florestal</span><span class="p">[</span><span class="s1">&#39;2020&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">xbar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32.08994149987757 39.35639485688348
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-2">
+<h1>Exercício 2<a class="headerlink" href="#exercicio-2" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: estimar probabilidades baseado num modelo</em></p>
+<p>Se você chegou até aqui, então sabe que:</p>
+<ul class="simple">
+<li><p>Em algumas situações, nós não temos acesso a toda a população de interesse - somente a uma amostra dela,</p></li>
+<li><p>Quanto maior é a amostra (ou seja, quanto maior é <span class="math notranslate nohighlight">\(N\)</span>), menor é o desvio padrão da estimativa <span class="math notranslate nohighlight">\(\bar{X}\)</span>.</p></li>
+</ul>
+<p>Porém, em contraposição a isso, existem fenômenos que são tão simples que conseguimos fazer modelos matemáticos muito precisos para eles. Um desses fenômenos é o de jogar uma moeda e verificar se saiu “cara” ou “coroa”. É claro que a moeda, ao ser jogada, obedece fenômenos da física, propagações de momentos de inércia, colisões semi-elásticas, etc., e isso determina sua trajetória. Porém, esses fatores todos são tão delicados, incontroláveis e complexos que geralmente atribuímos seus impactos ao mero acaso, ou “chance”.</p>
+<p>É muito provável (com o perdão do trocadilho) que você não vá passar horas jogando moedas por aí. Porém, há outros fenômenos que são muito parecidos com jogar uma moeda. Por exemplo:</p>
+<ul class="simple">
+<li><p>Conversão de clientes: se um cliente visita seu site, ele pode ou não clicar em “comprar”</p></li>
+<li><p>Resultado esportivo: se um time de futebol joga uma partida, ele pode ou não vencer</p></li>
+<li><p>Fraudes de cartão de crédito: se uma compra é feita com cartão de crédito, ela pode ou não ser uma fraude</p></li>
+</ul>
+<section id="distribuicoes">
+<h2>Distribuições<a class="headerlink" href="#distribuicoes" title="Permalink to this heading">#</a></h2>
+<p>Quando temos fenômenos que são dependentes do acaso para acontecerem (e veja, acaso, neste caso, significa “fatores que podem até ser causais, mas variam de forma incontrolável”), dizemos que eles têm uma “probabilidade” de acontecer. Voltando à nossa moeda, dizemos que há uma <em>probabilidade</em> de sair cara e uma <em>probabilidade</em> de sair coroa.</p>
+<p>O ato de jogar a moeda significa <em>realizar um experimento</em>. A soma das probabilidades de todos os resultados possíveis de um experimento é sempre igual a 1 (ou 100%). Então, se nossa moeda está bem balanceada, a probabilidade de sair cara é a mesma probabilidade de sair coroa, ambas iguais a <span class="math notranslate nohighlight">\(0.5\)</span> e somando um total de 1, ou:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P(\text{cara})=0.5 \\
+P(\text{coroa})=0.5
+\end{split}\]</div>
+<p>Nosso modelo matemático mostra como essa probabilidade total (de 1) se <em>distribui</em> entre os resultados possíveis. Por isso, esse tipo de modelo é chamado de <em>distribuição</em>. Como o resultado da jogada é aleatório, ele é chamado de <em>variável aleatória</em>.</p>
+</section>
+<section id="enunciado-do-exercicio">
+<h2>Enunciado do exercício<a class="headerlink" href="#enunciado-do-exercicio" title="Permalink to this heading">#</a></h2>
+<p>Uma das grandes rivalidades da NBA é entre os times do Chicago Bulls (que já teve o Michael Jordan) e o Los Angeles Lakers (que já teve o Magic Johson). De acordo com <a class="reference external" href="https://www.landofbasketball.com/head_to_head_gl/lakers_vs_bulls_game_log_season.htm">dados históricos</a>, historicamente (desde 1966) os times jogaram 161 vezes, com 66 vitórias dos Bulls e 95 vitórias dos Lakers. Se escolhermos um jogo aleatório entre todos esses da série histórica, qual é a probabilidade de escolhermos um jogo em que há vitória dos Bulls?</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-3">
+<h1>Exercício 3<a class="headerlink" href="#exercicio-3" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: calcular a esperança e a variância para distribuições e comparar com resultados empíricos</em></p>
+<section id="propriedades-de-distribuicoes">
+<h2>Propriedades de distribuições<a class="headerlink" href="#propriedades-de-distribuicoes" title="Permalink to this heading">#</a></h2>
+<p>Assim como tínhamos a média e o desvio padrão em populações e amostras, podemos calcular medidas de centralidade e dispersão para distribuições:</p>
+<ul class="simple">
+<li><p>Centralidade: a <em>esperança</em> <span class="math notranslate nohighlight">\(E(X)=\sum_{n=1}^N P(x_n) x_n\)</span></p></li>
+<li><p>Dispersão: a <em>variância</em> <span class="math notranslate nohighlight">\(\text{Var}(X) =  \sum_{n=1}^N P(x_n) ({x_n}-E(X))^2\)</span></p></li>
+</ul>
+<p>Lembrando que o desvio padrão é simplesmente a raiz quadrada da variância!</p>
+<section id="exemplo-calculo-da-media-e-da-variancia-em-uma-jogada-de-moedas">
+<h3>EXEMPLO: Cálculo da média e da variância em uma jogada de moedas<a class="headerlink" href="#exemplo-calculo-da-media-e-da-variancia-em-uma-jogada-de-moedas" title="Permalink to this heading">#</a></h3>
+<p>Por exemplo, para o caso da moeda, se associarmos que cara=0 e coroa=1, então temos que os resultados possíveis de um experimento são <span class="math notranslate nohighlight">\(x_1=\text{cara}=0\)</span> e <span class="math notranslate nohighlight">\(x_2=\text{cara}=1\)</span>. Portanto, podemos calcular a esperança:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+E(X) &amp;= \sum_{n=1}^N P(x_n) x_n\\ 
+&amp;= P(\text{cara}) \times 0 + P(\text{coroa}) \times 1 \\
+&amp;= 0.5 \times 0 + 0.5 \times 1 \\
+&amp;= 0.5
+\end{align*}
+\end{split}\]</div>
+<p>e a variância:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\text{Var}(X) &amp;=  \sum_{n=1}^N P(x_n) ({x_n}-E(X))^2\\ 
+&amp;= P(\text{cara}) \times (0-0.5)^2 + P(\text{coroa}) \times (1-0.5)^2 \\
+&amp;= 0.5 \times (-0.5)^2 + 0.5 \times (0.5)^2 \\
+&amp;= 0.5 \times 0.25 + 0.5 \times 0.25\\
+&amp;= 0.25
+\end{align*}
+\end{split}\]</div>
+</section>
+</section>
+<section id="id1">
+<h2>Enunciado do exercício<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Uma casa de apostas da NBA está recebendo apostas para o jogo Bulls vs. Lakers. As condições da aposta são as seguintes:</p>
+<ul class="simple">
+<li><p>Se o apostador escolher os Bulls, e os Bulls vencerem, ele recebe R$2,00 para cada real apostado;</p></li>
+<li><p>Se o apostador escolher os Lakers, e os Lakers vencerem, ele recebe R$1,40 para cada real apostado;</p></li>
+<li><p>O apostador não recebe de volta o valor apostado, isto é, o retorno é somente o que recebeu de volta por sua aposta.</p></li>
+</ul>
+<p>(a) Qual é a expectativa de retorno por real apostado para cada um dos casos (apostar nos Bulls ou nos Lakers)</p>
+<p>(b) Qual é a variância e o desvio padrão do retorno esperados para apostadores dos Bulls? E dos Lakers?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Resolva o exercício aqui</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>Exercício 3<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: aplicar o conceito de valor esperado e variância para analisar uma intervenção de marketing</em></p>
+<p>Um website tem uma taxa de conversão típica de 10%, com variações para mais ou para menos. Foi feita uma intervenção de marketing para melhorar a usabilidade e a taxa de conversão na semana seguinte foi de 12%, aumentando as vendas em R$100.000,00.</p>
+<p>Essa alteração na taxa de conversão representa uma alteração de mais de um desvio padrão em relação à condição inicial, ou trata-se de uma alteração que pode ser fruto da variabilidade natural das taxas de conversão do website?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Resolva seu exercício aqui</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-4">
+<h1>Exercício 4<a class="headerlink" href="#exercicio-4" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: calcular a esperança e variância da soma de variáveis aleatórias independentes</em></p>
+<section id="somando-variaveis-aleatorias-independentes">
+<h2>Somando variáveis aleatórias independentes<a class="headerlink" href="#somando-variaveis-aleatorias-independentes" title="Permalink to this heading">#</a></h2>
+<p>Algumas variáveis aleatórias são chamadas de “independentes”. Duas variáveis são independentes entre si quando realizar o experimento sobre uma delas não tem nenhum impacto nas probabilidades da outra.</p>
+<p>Duas variáveis independentes são, por exemplo, duas jogadas de moeda: a segunda jogada de moeda não é influenciada de forma alguma pela primeira jogada.</p>
+<p>Duas variáveis dependentes são, por exemplo, duas ações do mesmo setor na bolsa de valores: ao analisar o movimento de uma delas, é possível ter informações sobre o movimento da outra.</p>
+<p>Além de jogadas de moedas, também costumam ser indepentes: clientes (especialmente em lojas online), participantes de pesquisas e desastres naturais como terremotos.</p>
+<p>Quando somamos duas variáveis independentes, temos que:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(E(X+Y) = E(X) + E(Y)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y)\)</span></p></li>
+</ul>
+<section id="exemplo">
+<h3>Exemplo<a class="headerlink" href="#exemplo" title="Permalink to this heading">#</a></h3>
+<p>Numa casa de apostas, eu jogo uma moeda. Caso saia cara, ganho 1 real. Caso saia coroa, perco 1 real. Nesse caso, ao jogar a moeda uma vez, tenho:</p>
+<div class="math notranslate nohighlight">
+\[E(X) = 1 \times 0.5 + (-1) \times 0.5 = 0\]</div>
+<p>e</p>
+<div class="math notranslate nohighlight">
+\[\text{Var}(X) = 0.5 \times 1^2 + 0.5 \times (-1)^2 = 1\]</div>
+<p>Caso eu jogue duas moedas, tenho:</p>
+<div class="math notranslate nohighlight">
+\[E(X+Y) = E(X) + E(Y) = 0 + 0 = 0\]</div>
+<p>e</p>
+<div class="math notranslate nohighlight">
+\[\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) = 1 + 1 = 2\]</div>
+</section>
+</section>
+<section id="id3">
+<h2>Enunciado do exercício<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>Sabendo das probabilidades de apostas de basquete da NBA, calcule o retorno esperado e a variância para um jogador que decide apostar nos Bulls em 10 jogos consecutivos.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercicio-5">
+<h1>Exercício 5<a class="headerlink" href="#exercicio-5" title="Permalink to this heading">#</a></h1>
+<p><em>Objetivo: estimar o custo envolvido em seguros e entender o modelo estatístico das seguradoras</em></p>
+<p>Em maio de 2023, <a class="reference external" href="https://olhardigital.com.br/2023/07/11/carros-e-tecnologia/roubos-e-furtos-de-carros-crescem-23-em-sp-saiba-quais-sao-os-mais-visados/#:~:text=os%20mais%20visados-,Roubos%20e%20furtos%20de%20carros%20crescem%2023%25%20em%20SP%3B%20saiba,quais%20s%C3%A3o%20os%20mais%20visados&amp;text=O%20n%C3%BAmero%20de%20roubos%20e,No%20total%2C%20foram%206.869%20casos.">houve 6.869 casos de roubos de automóveis</a> em São Paulo. Também, houve <a class="reference external" href="https://g1.globo.com/sp/sao-paulo/noticia/2023/04/24/cidade-de-sp-registra-no-1-trimestre-de-2023-maior-numero-de-mortes-no-transito-dos-ultimos-sete-anos.ghtml">209 acidentes</a> no primeiro semestre de 2023. Segundo <a class="reference external" href="https://garagem360.com.br/carros-e-motos-em-sp-descubra-quantos-milhoes-circulam-conforme-pesquisa/">dados de 2021</a>, há  8,8 milhões de automóveis na cidade de São Paulo. Com medo do roubo, a maior parte das pessoas faz seguro.</p>
+<p>Para mantermos nossos cálculos mais simples, vamos assumir que o seguro significa que, caso o carro seja roubado ou sofra um acidente, ele será inteiramente substituído pela seguradora. Todos os cálculos realizados aqui serão para o período de um mês, assumindo os dados acima, e também assumindo que um cliente só pode sofrer um sinistro nesse mês.</p>
+<p>Usando dados aproximados (se quiser, troque essas informações pelas do seu próprio carro!), vamos assumir que um carro que vale, pela Tabela FIPE, R<span class="math notranslate nohighlight">\(37.000,00, paga seguro anual de R\)</span>2.000,00. Por simplicidade, vamos assumir que todos os habitantes de São Paulo têm o mesmo carro e pagam esse mesmo valor.</p>
+<p>(a) Qual é a probabilidade de ocorrer um sinistro (roubo ou acidente) em um carro qualquer em São Paulo durante o período de um mês?</p>
+<p>(b) Qual é o custo, para a seguradora, de ocorrer um sinistro?</p>
+<p>(c) Qual é a expectativa de custo, para a seguradora, para cada cliente?</p>
+<p>(d) Qual é a diferença entre o valor pago e a expectativa de custo, isto é, a expectativa de lucro da seguradora, para cada cliente?</p>
+<p>(e) Qual é o desvio padrão do custo, para a seguradora, de cada cliente?</p>
+<p>(f) Assumindo o retorno esperado e o desvio padrão, é seguro para a seguradora ter apenas um cliente?</p>
+<p>(g) Usando as propriedades de esperança e variância, calcule a esperança, a variância e o desvio padrão para uma seguradora que tem como clientes 10% dos carros de São Paulo. Assuma que cada motorista é independente, isto é, que ocorrer um roubo ou acidente com um carro não tem impacto nenhum nos roubos e acidentes de outros carros.</p>
+<p>(h) Com o retorno esperado e o desvio padrão para o caso em que a seguradora tem muitos clientes, você acredita que se trata de um modelo de negócios viável?</p>
+<p>(i) Estatisticamente, qual é a vantagem que a seguradora oferece para seu cliente?</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Variáveis Aleatórias Discretas</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#texto-introdutorio">Texto introdutório</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-1">Exercício 1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-2">Exercício 2</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribuicoes">Distribuições</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enunciado-do-exercicio">Enunciado do exercício</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-3">Exercício 3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propriedades-de-distribuicoes">Propriedades de distribuições</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemplo-calculo-da-media-e-da-variancia-em-uma-jogada-de-moedas">EXEMPLO: Cálculo da média e da variância em uma jogada de moedas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Enunciado do exercício</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Exercício 3</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-4">Exercício 4</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#somando-variaveis-aleatorias-independentes">Somando variáveis aleatórias independentes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemplo">Exemplo</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Enunciado do exercício</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercicio-5">Exercício 5</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Prof. Dr. André Filipe M. Batista
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
